@@ -1,0 +1,20 @@
+database:
+  driverClass: org.hsqldb.jdbc.JDBCDriver
+  user: SA
+  password: SA
+  url: jdbc:hsqldb:db/db
+  validationQuery: SELECT * FROM INFORMATION_SCHEMA.SYSTEM_TABLES
+
+server:
+  applicationConnectors:
+    - type: http
+      port: 8080
+
+logging:
+  level: INFO
+  loggers:
+    com.nprogramming.city: DEBUG
+    com.nprogramming.city.data: DEBUG
+    io.dropwizard: INFO
+  appenders:
+    - type: console

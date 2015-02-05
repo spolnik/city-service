@@ -1,0 +1,62 @@
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'gradle-one-jar'
+apply plugin: 'groovy'
+
+sourceCompatibility = 1.8
+version = '1.0'
+mainClassName = 'com.nprogramming.city.CitySearchApplication'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+
+    dependencies {
+        classpath 'com.github.rholder:gradle-one-jar:1.0.3'
+    }
+}
+
+project.ext {
+    dropwizardVersion = '0.8.0-rc2'
+    groovyVersion = '2.4.0'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile (
+            'org.spockframework:spock-core:0.7-groovy-2.0',
+            'org.codehaus.groovy:groovy-all:' + groovyVersion,
+            'org.codehaus.groovy.modules.http-builder:http-builder:0.7+'
+    )
+
+    compile (
+            'io.dropwizard:dropwizard-core:' + dropwizardVersion,
+            'io.dropwizard:dropwizard-client:' + dropwizardVersion,
+            'io.dropwizard:dropwizard-hibernate:' + dropwizardVersion,
+            'org.hsqldb:hsqldb:2.3.2',
+    )
+}
+
+task oneJar(type: OneJar) {
+    mainClass = mainClassName
+}
+
+run {
+    args 'server'
+}
+
+artifacts {
+    oneJar
+}
+
+test {
+    testLogging {
+        exceptionFormat = 'full'
+    }
+}
+
+defaultTasks 'oneJar'
